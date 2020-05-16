@@ -1,0 +1,80 @@
+{% load static %}
+    <link href="{% static 'covid19/css/sb-admin-2.css' %}" rel="stylesheet">
+    <link href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js" async></script>
+
+<!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary text-center">
+                                <strong>Covid-19 Cases</strong>
+                            </h6>
+                            <h6 class="m-0 font-weight-bold text-primary text-center">
+                                Last Updated <strong>{% now "SHORT_DATETIME_FORMAT" %}</strong>
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover" id="dataTable">
+                                    <thead>
+                                    <tr>
+                                        <th>State</th>
+                                        <th>District</th>
+                                        <th>Confirmed Cases</th>
+                                        <th>Active</th>
+                                        <th>Recovered</th>
+                                        <th>Deceased</th>
+                                    </tr>
+                                    </thead>
+                                    <tfoot>
+                                    <tr>
+                                        <th>State</th>
+                                        <th>District</th>
+                                        <th>Confirmed Cases</th>
+                                        <th>Active</th>
+                                        <th>Recovered</th>
+                                        <th>Deceased</th>
+                                    </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        {% for state, val in context.items %}
+                                            {% for dist, data in val.items %}
+                                                <tr>
+                                                    <td>{{ state }}</td>
+                                                    <td>{{ dist }}</td>
+                                                    <td>{{ data.confirmed }}</td>
+                                                    <td>{{ data.active }}</td>
+                                                    <td>{{ data.recovered }}</td>
+                                                    <td>{{ data.deceased }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% endfor %}
+                                        </tbody>
+                                    {% comment %}<tbody>
+                                    {% for index, data in context.items %}
+                                            <tr>
+                                                <td>{{ data.6 }}</td>
+                                                <td>{{ data.7 }}</td>
+                                                <td>{{ data.2 }}</td>
+                                                <td>{{ data.1 }}</td>
+                                                <td>{{ data.4 }}</td>
+                                                <td>{{ data.3 }}</td>
+                                            </tr>
+                                    {% endfor %}
+                                    </tbody>{% endcomment %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable({
+                ordering: true,
+                select: true,
+                scrollY: 450,
+
+            });
+        });
+    </script>

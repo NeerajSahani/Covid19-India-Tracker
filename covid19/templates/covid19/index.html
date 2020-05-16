@@ -1,0 +1,258 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}DASHBOARD {% endblock %}
+{% block head %}
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link href="{% static 'covid19/css/sb-admin-2.css' %}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+    <br>
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 text-md-center font-weight-bold mb-0 text-gray-800"> Active Cases</h1>
+        </div>
+
+        <!-- Content Row -->
+        <div class="row">
+            <!-- Base Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2 ">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="font-weight-bold text-success text-uppercase mb-1">India</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    {{ india.values.0 }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Start Date Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="font-weight-bold text-info text-uppercase mb-1">Uttar Pradesh</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ UP.values.0 }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- End Date) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="font-weight-bold text-warning text-uppercase mb-1">Gorakhpur</div>
+                                <div class="h6 mb-0 font-weight-bold text-gray-800">{{ gkp.values.0.0 }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-danger shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="font-weight-bold text-danger text-uppercase mb-1">Total Death</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ india.values.2 }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Content Row -->
+
+        <div class="row">
+
+            <!-- Cities -->
+            <div class="col-xl-8 col-lg-7">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Cities With Most Active Cases [Top 7]</h6>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body" style="height: 420px;">
+                        <div class="chart-area">
+                            {{ district_bar|safe }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pie Chart -->
+            <div class="col-xl-4 col-lg-5">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Top 5 States with most confirmed cases</h6>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body" style="height: 350px">
+                        <div class="chart-pie">
+                            {{ state_pie|safe }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Row -->
+        <div class="row">
+
+            <!-- Content Column -->
+            <div class="col-lg-6 mb-4">
+                <!-- Result Card Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">
+                            Most Active Cases in Uttar Pradesh [Top 7]
+                        </h6>
+                    </div>
+
+                    <div class="card-body">
+                        {{ up_bar|safe }}
+                    </div>
+                </div>
+
+                <!-- Color System -->
+                <div class="row">
+                    <div class="col-lg-6 mb-4">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-danger">
+                                    Uttar Pradesh Stats
+                                </h6>
+                            </div>
+
+                            <div class="card-body">
+                                <h4 class="h6 font-weight-bold">Confirmed
+                                    <span class="float-right">{{ UP.values.1 }}</span>
+                                </h4><br>
+
+                                <h4 class="h6 font-weight-bold">Active
+                                    <span class="float-right">{{ UP.values.0 }}</span>
+                                </h4><br>
+
+                                <h4 class="h6 font-weight-bold"> Recovered
+                                    <span class="float-right">{{ UP.values.3 }}</span>
+                                </h4><br>
+                                <h4 class="h6 font-weight-bold"> Deaths
+                                    <span class="float-right">{{ UP.values.2 }}</span>
+                                </h4><br>
+
+                                <h4 class="h6 font-weight-bold"> New Confirmed
+                                    <span class="float-right">NA</span>
+                                </h4><br>
+
+                                <h4 class="h6 font-weight-bold"> New Recovered
+                                    <span class="float-right">NA</span>
+                                </h4><br>
+
+                                <h4 class="h6 font-weight-bold"> New Deaths
+                                    <span class="float-right">NA</span>
+                                </h4><br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-danger">
+                                    Gorakhpur Stats
+                                </h6>
+                            </div>
+
+                            <div class="card-body">
+                                <h4 class="h6 font-weight-bold">Confirmed
+                                    <span class="float-right">{{ gkp.values.1.0 }}</span>
+                                </h4><br>
+
+                                <h4 class="h6 font-weight-bold">Active
+                                    <span class="float-right">{{ gkp.values.0.0 }}</span>
+                                </h4><br>
+
+                                <h4 class="h6 font-weight-bold"> Recovered
+                                    <span class="float-right">{{ gkp.values.3.0 }}</span>
+                                </h4><br>
+                                <h4 class="h6 font-weight-bold"> Deaths
+                                    <span class="float-right">{{ gkp.values.2.0 }}</span>
+                                </h4><br>
+
+                                <h4 class="h6 font-weight-bold"> New Confirmed
+                                    <span class="float-right">{{ gkp.values.4.0.confirmed }}</span>
+                                </h4><br>
+
+                                <h4 class="h6 font-weight-bold"> New Recovered
+                                    <span class="float-right">{{ gkp.values.4.0.recovered }}</span>
+                                </h4><br>
+
+                                <h4 class="h6 font-weight-bold"> New Deaths
+                                    <span class="float-right">{{ gkp.values.4.0.deceased }}</span>
+                                </h4><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">
+                            World Map
+                        </h6>
+                    </div>
+
+                    <div class="card-body">
+                        {{ map|safe }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mb-4">
+                <!-- Illustrations -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Past Cases</h6>
+                    </div>
+                    <div class="card-body">
+                        {{ line|safe }}
+                    </div>
+                </div>
+
+                <!-- Approach -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Symptoms</h6>
+                    </div>
+                    <div class="card-body">
+                        <img src="{% static 'covid19/images/symptoms.png' %}" style="width: 100%">
+                    </div>
+                </div>
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Precautions</h6>
+                    </div>
+                    <div class="card-body">
+                        <img src="{% static 'covid19/images/precaution.png' %}" style="width: 100%">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        {% include 'covid19/table.html' %}
+    </div>
+    <!-- /.container-fluid -->
+{% endblock %}
